@@ -1,55 +1,101 @@
-import AcmeLogo from '@/app/ui/acme-logo';
-import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
-import styles from '@/app/ui/home.module.css';
-import { lusitana } from '@/app/ui/fonts';
-import Image from 'next/image';
+// src/app/page.tsx
+'use client';
 
-export default function Page() {
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import Navbar from './components/Navbar';
+import Footer from 'app/components/Footer';
+
+export default function Home() {
+  const products = [
+    { name: "Epen Cupen", price: "$9.99", img: "/epen.jpg", link: "/shop/product1" },
+    { name: "Doa Cari Jodoh", price: "$14.99", img: "/1.png", link: "/shop/product2" },
+    { name: "Classic Comedy DVD", price: "$12.99", img: "/2.png", link: "/shop/product3" },
+    { name: "Mr. Bean Holiday", price: "$19.99", img: "/3.png", link: "/shop/product4" },
+  ];
+
+  const heroImages = ["/1.png", "/2.png", "/3.png", "/4.png"];
+  const [currentImage, setCurrentImage] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prevIndex) => (prevIndex + 1) % heroImages.length);
+    }, 4000); // Ganti gambar setiap 4 detik
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <main className="flex min-h-screen flex-col p-6">
-      <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52">
-        <AcmeLogo />
-      </div>
-      <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
-        <div className="flex flex-col justify-center gap-6 rounded-lg bg-gray-50 px-6 py-10 md:w-2/5 md:px-20">
-        <div
-  className="relative w-0 h-0 border-l-[15px] border-r-[15px] border-b-[26px] border-l-transparent border-r-transparent border-b-black"
-/>
-          <p
-      className={`${lusitana.className} text-xl text-gray-800 md:text-3xl md:leading-normal`}
-    >
-            <strong>Welcome to Acme.</strong> This is the example for the{' '}
-            <a href="https://nextjs.org/learn/" className="text-blue-500">
-              Next.js Learn Course
-            </a>
-            , brought to you by Vercel.
-          </p>
-          <Link
-            href="/dashboard"
-            className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
-          >
-            <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
-          </Link>
+    <div className="bg-gray-100">
+      <Navbar />
+
+      {/* Section 1: Hero */}
+      <section
+        className="relative h-screen w-full bg-cover bg-center flex items-center"
+        style={{ backgroundImage: `url(${heroImages[currentImage]})`, transition: 'background-image 1s ease-in-out' }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/10 z-10" />
+        <div className="relative z-20 p-10 ml-10 max-w-xl">
+        <h1 className="text-5xl font-extrabold text-white mb-5 whitespace-nowrap">
+         Welcome to CND Store!
+        </h1>
+          <h3 className="text-2xl text-gray-200">Where Classic Comedy Never Gets Old!!</h3>
+
+            {/* Tombol Shopping Now */}
+            <a
+  href="/shop"
+  className="inline-block outline outline-yellow-500 text-gray-50 font-semibold py-3 px-6 mt-10 rounded-lg shadow hover:bg-yellow-400 transition duration-300"
+>
+  🎬 Shopping Now
+</a>
+
         </div>
-        <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
-          {/* Add Hero Images Here */}
-          <Image
-        src="/hero-desktop.png"
-        width={1000}
-        height={760}
-        className="hidden md:block"
-        alt="Screenshots of the dashboard project showing desktop version"
-      />
-       <Image
-        src="/hero-mobile.png"
-        width={560}
-        height={620}
-        className="block md:hidden"
-        alt="Screenshot of the dashboard project showing mobile version"
-      />
+      </section>
+
+      {/* Section 2: Best Sellers */}
+      <section className="py-10 px-6 sm:px-12 bg-white">
+        <h2 className="text-4xl font-bold text-gray-800 text-center mb-10">🔥 Best Sellers</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+          {products.map((product, index) => (
+            <div key={index} className="bg-white rounded-xl shadow-md overflow-hidden transition-transform transform hover:-translate-y-1 hover:shadow-xl">
+              <Image
+                className="w-full h-60 object-cover"
+                src={product.img}
+                alt={product.name}
+                width={400}
+                height={300}
+              />
+              <div className="p-4">
+                <h3 className="text-lg font-bold text-gray-800 truncate">{product.name}</h3>
+                <p className="text-sm text-gray-500">{product.price}</p>
+                <Link href={product.link}>
+                  <p className="mt-4 inline-block text-blue-500 hover:underline text-sm">View Details</p>
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
-    </main>
+      </section>
+
+      {/* Section 3: Why Shop With Us */}
+      <section className="py-20 px-6 sm:px-12 bg-white">
+        <h2 className="text-3xl font-bold text-gray-800 text-center mb-10">🎯 Why Shop With Us?</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h3 className="text-lg font-bold text-gray-800 mb-2">Curated Classics</h3>
+            <p className="text-sm text-gray-600">Only the best comedy shows and films from every era.</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h3 className="text-lg font-bold text-gray-800 mb-2">High Quality CDs & DVDs</h3>
+            <p className="text-sm text-gray-600">Enjoy clean, remastered versions of your favorite funny content.</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h3 className="text-lg font-bold text-gray-800 mb-2">Fast & Reliable Delivery</h3>
+            <p className="text-sm text-gray-600">Your laugh therapy delivered quickly and safely to your door.</p>
+          </div>
+        </div>
+      </section>
+      <Footer/>
+    </div>
   );
 }

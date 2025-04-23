@@ -8,38 +8,44 @@ import {
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-// Map of links to display in the side navigation.
-// Depending on the size of the application, this would be stored in a database.
+
 const links = [
   { name: 'Home', href: '/dashboard', icon: HomeIcon },
-  {
-    name: 'Invoices',
-    href: '/dashboard/invoices',
-    icon: DocumentDuplicateIcon,
-  },
-  { name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon },
+  { name: 'Product', href: '/dashboard/product', icon: DocumentDuplicateIcon },
+  { name: 'Transaction', href: '/dashboard/transaction', icon: UserGroupIcon },
 ];
 
 export default function NavLinks() {
   const pathname = usePathname();
+
   return (
     <>
       {links.map((link) => {
-        const LinkIcon = link.icon;
+        const Icon = link.icon;
+        const active = pathname === link.href;
         return (
           <Link
             key={link.name}
             href={link.href}
             className={clsx(
-              'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3',
+              'flex items-center gap-4 rounded-md p-3 transition-all duration-200',
               {
-                'bg-sky-100 text-blue-600': pathname === link.href,
-              },
+                'bg-white text-blue-700 shadow-md': active,
+                'hover:bg-blue-800': !active,
+              }
             )}
           >
-            <LinkIcon className="w-6" />
-            <p className="hidden md:block">{link.name}</p>
-           </Link>
+            <div className={clsx(
+              'p-2 rounded-md',
+              {
+                'bg-blue-100 text-blue-700': active,
+                'bg-blue-600': !active,
+              }
+            )}>
+              <Icon className="h-5 w-5" />
+            </div>
+            <span className="text-sm font-medium">{link.name}</span>
+          </Link>
         );
       })}
     </>
