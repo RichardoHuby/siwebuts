@@ -1,5 +1,17 @@
-## Next.js App Router Course - Starter
+Nama Kelompok: B_1
 
-This is the starter template for the Next.js App Router Course. It contains the starting code for the dashboard application.
+Anggota:
+Yohanes Richardo Huby - 221712121
+Daniel Justin 0. SihombinG -221712148
 
-For more information, see the [course curriculum](https://nextjs.org/learn) on the Next.js Website.
+Deskripsi Proyek:
+Website e-commerce sederhana untuk penjualan CD film komedi dengan fitur halaman utama, halaman dashboard, navigasi antar halaman, dan layout dinamis menggunakan Next.js.
+
+Link GitHub:
+https://github.com/RichardoHuby/siwebuts.git
+
+Link Deploy: -
+
+Pembagian Tugas:
+Richardo: Halaman utama (landing page), layout dashboard, struktur folder routing, styling dan konten tambahan
+Daniel: Komponen navigasi (SideNav, NavLinks), halaman invoices, Halaman products
